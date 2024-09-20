@@ -22,3 +22,4 @@ int main()
     }
     cout << "Max sequence: " << imax << ", max count: " << ColatzSequece(imax) << endl;
 }
+1
