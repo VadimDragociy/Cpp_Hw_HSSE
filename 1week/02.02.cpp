@@ -1,24 +1,9 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <unordered_map>
 
-int speedpow(int number, int k)
-{
-    float count{1};
-    if (!k) return 1;
-    while (k) {
-        if (k % 2 == 0) {
-            k /= 2;
-            number *= number;
-        } else {
-            k--;
-            count *= number;
-        }
-    }
-    return count;
-}
-
-long long int sum_del(long long int n)
+int sum_del(int n)
 {
     auto j{2};
     auto sum{1};
@@ -29,10 +14,10 @@ long long int sum_del(long long int n)
     return sum;
 }
 
-void ArmstrongNumbers(long long int N)
+void ArmstrongNumbers(int N)
 {
     int num_len{0};
-    long long int i{1};
+    int i{1};
     auto j{0};
     auto literal{0};
     auto ArmstrongSum{0};
@@ -44,7 +29,7 @@ void ArmstrongNumbers(long long int N)
         j = i;
         while(j != 0){
             literal = j%10;
-            ArmstrongSum += speedpow(literal, num_len);
+            ArmstrongSum += pow(literal, num_len);
             j = j / 10;
         }
         if (i == ArmstrongSum) std::cout << i << " ";
@@ -54,7 +39,7 @@ void ArmstrongNumbers(long long int N)
     std::cout << std::endl;
 }
 
-void FibbonacciNumbers(long long int N)
+void FibbonacciNumbers(int N)
 {
     int last{1}, prelast{0}, support{0};
 
@@ -69,9 +54,9 @@ void FibbonacciNumbers(long long int N)
     std::cout << std::endl;
 }
 
-void AbundantNumbers(long long int N)
+void AbundantNumbers(int N)
 {
-    long long int i{1};
+    int i{1};
     auto sum{0};
 
     std::cout << "Abudant numbers: ";
@@ -85,26 +70,32 @@ void AbundantNumbers(long long int N)
     std::cout << std::endl;
 }
 
-void FriendlyNumbers(long long int N)
+void FriendlyNumbers(int N)
 {
-    int i, j;
-    std::vector<long int> numbers;
+    int i;
+    std::vector<int> sum_for_numbers;
+    static std::unordered_map<int, int> memory;
 
     std::cout << "Friendly numbers: ";
 
     for (i = 0; i < N; i++)
-       numbers.push_back(sum_del(i));
+       sum_for_numbers.push_back(sum_del(i));
 
-    for (i = 1; i < N-1; i++)
-        for (j = i + 1; j < N; j++)
-            if (i == numbers[j] && j == numbers[i])
-                std::cout << i << " and " << j << "; ";
+    for (i = 1; i < N; i++){
+        auto sum_i = sum_for_numbers[i];
+        if (!(sum_i < N)) continue;
+
+        if (i == sum_for_numbers[sum_i] && sum_i != i && memory.find(sum_i) == memory.end()){
+            memory[i] = sum_i;
+            std::cout << i << " and " << sum_for_numbers[i] << "; ";
+        }
+    }
 }
 
 
 
 int main(){
-    long long int N{0};
+    int N{0};
 
     std::cout << "Enter N" << std::endl;
     std::cin >> N;
