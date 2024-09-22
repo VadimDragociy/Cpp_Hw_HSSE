@@ -1,10 +1,10 @@
 #include <iostream>
 #include <unordered_map>
  
-long long int ColatzSequece(long long int n)
+std::size_t ColatzSequece(int n)
 {
     if (n == 1) return 1;
-    static std::unordered_map<long long int, long long int> m;
+    static std::unordered_map<int, std::size_t> m;
 
     if (m.find(n) != m.end()) return(m.find(n) -> second);
 
@@ -14,8 +14,8 @@ long long int ColatzSequece(long long int n)
 
 int main()
 {
-    int imax = 1;
-    for (auto i = 2; i <= 100; i++) {
+    auto imax = 1;
+    for (auto i = 2; i <= 10000; i++) {
         if (ColatzSequece(i) > ColatzSequece(imax)) imax = i;
     }
     std::cout << "Max sequence: " << imax << ", max count: " << ColatzSequece(imax) << std::endl;
