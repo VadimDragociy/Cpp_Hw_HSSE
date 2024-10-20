@@ -54,17 +54,10 @@ class IPv4
         return *this;
     }
 
-    IPv4& operator++(int){
-        *this = IPv4(1 + this->to_ulong());
-        return *this;
-    }
+    IPv4& operator++(int) { IPv4 t(*this); ++(*this); return t; }
+	IPv4& operator--(int) { IPv4 t(*this); --(*this); return t; }
 
     IPv4& operator--(){
-        *this = IPv4(this->to_ulong() - 1);
-        return *this;
-    }
-
-    IPv4& operator--(int){
         *this = IPv4(this->to_ulong() - 1);
         return *this;
     }
