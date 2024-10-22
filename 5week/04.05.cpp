@@ -7,10 +7,11 @@ inline T searchMin(T const& arg0)
     return arg0;
 }
 template<typename T, typename... Args>
-inline T searchMin(T const & arg0, T const & arg1, Args const &... args)
+inline T searchMin(T const & arg0, Args const &... args)
 {
-    if(arg0 < arg1) return searchMin(arg0, args...);
-    return searchMin(arg1, args...);
+    auto tmp = searchMin(args...);
+    if(arg0 < tmp) return arg0;
+    return tmp;
 }
 
 int main(){
