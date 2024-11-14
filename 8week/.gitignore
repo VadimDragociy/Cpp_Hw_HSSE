@@ -1,2 +1,5 @@
 /first_week.cpp
 *.exe
+/*.exe
+/06.03/.vs
+/06.03/.vscode

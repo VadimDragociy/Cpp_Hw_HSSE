@@ -27,6 +27,7 @@ int main() {
     PlainText plainFormatter;
     UpperCase upperFormatter;
 
+    Text<PlainText> plaintext;
     std::cout << "Plain text: ";
     plainFormatter.print();
 

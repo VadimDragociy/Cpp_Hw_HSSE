@@ -15,7 +15,7 @@ struct SubStrategy {
 template <typename Strategy>
 class Context {
 public:
-    Context(Strategy strategy) : strategy(strategy) {}
+    Context(Strategy& strategy) : strategy(strategy) {}
 
     int executeStrategy(int a, int b) const {
         return strategy.execute(a, b);
@@ -26,10 +26,12 @@ private:
 };
 
 int main() {
-    Context<AddStrategy> contextAdd(AddStrategy{});
+    AddStrategy strategy1;
+    Context contextAdd(strategy1);
     std::cout << contextAdd.executeStrategy(5, 3) << std::endl;
 
-    Context<SubStrategy> contextSub(SubStrategy{});
+    SubStrategy strategy2;
+    Context contextSub(strategy2);
     std::cout << contextSub.executeStrategy(5, 3) << std::endl;
 
     return 0;

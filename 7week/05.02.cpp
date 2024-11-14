@@ -12,19 +12,19 @@ struct Person{
 struct Builder{
     Builder() : person() {}
 
-    Builder Name(std::string name) {
+    Builder& Name(const std::string &name) {
         person.name = name;
         return *this;
     }
-    Builder Height(int height) {
+    Builder& Height(int height) {
         person.height = height;
         return *this;
     }
-    Builder Age(int age) {
+    Builder& Age(int age) {
         person.age = age;
         return *this;
     }
-    Person get(){
+    Person& get(){
         return person;
     }
 

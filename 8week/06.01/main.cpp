@@ -1,7 +1,6 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-#include <Entity.cpp>
 #include <Entity.hpp>
 
 using namespace std::literals;
