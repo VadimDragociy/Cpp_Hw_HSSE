@@ -1,7 +1,8 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-#include <Entity.hpp>
+#include "Entity.cpp"
+#include "Entity.hpp"
 
 using namespace std::literals;
 using namespace Entity_nmspc;
