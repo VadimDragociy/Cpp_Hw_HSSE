@@ -2,7 +2,7 @@
 #define HEADER_HPP
 
 #include <string>
-
+using namespace std::literals;
 namespace Entity_nmspc{
 
 
