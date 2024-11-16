@@ -17,11 +17,11 @@ Entity::Entity(const int &data_1, int data_2) : Entity(data_1, data_2, 0) {}
 
 Entity::~Entity() { std::clog << "Entity::~Entity\n"; }
 
-auto Entity::data_1() const { return m_data_1; }
-auto Entity::data_2() const { return m_data_2; }
-auto Entity::data_3() const { return m_data_3; }
+int Entity::data_1() const { return m_data_1; }
+int Entity::data_2() const { return m_data_2; }
+int Entity::data_3() const { return m_data_3; }
 
-const auto &Entity::data_as_string() const
+const std::string &Entity::data_as_string() const
 {
     if (m_cached_data.is_invalid)
     {

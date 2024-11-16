@@ -16,11 +16,11 @@ public:
 
     ~Entity();
 
-    auto data_1() const;
-    auto data_2() const;
-    auto data_3() const;
+    int data_1() const;
+    int data_2() const;
+    int data_3() const;
 
-    const auto &data_as_string() const;
+    const std::string &data_as_string() const;
 
     void set_data_3(int data);
 
