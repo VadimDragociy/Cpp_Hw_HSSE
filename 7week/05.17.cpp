@@ -2,24 +2,45 @@
 #include <string>
 
 template <typename Implementation>
-class Text {
+class Formatter {
 public:
-    void print() const {
-        std::cout << static_cast<const Implementation*>(this)->test() << std::endl;
+    std::string format() const {
+        return static_cast<const Implementation*>(this)->formatImpl();
     }
 };
 
-class PlainText : public Text<PlainText> {
+class PlainText : public Formatter<PlainText> {
 public:
-    std::string test() const {
+    std::string formatImpl() const {
         return "plaintext";
     }
 };
 
-class UpperCase : public Text<UpperCase> {
+class UpperCase : public Formatter<UpperCase> {
 public:
-    std::string test() const {
+    std::string formatImpl() const {
         return "UPPERCASE";
+    }
+};
+
+template <typename Formatter>
+class Text {
+protected:
+    Formatter formatter;
+public:
+    explicit Text(const Formatter& fmt) : formatter(fmt) {}
+
+    void print() const {
+        std::cout << "Regular: " << formatter.format() << std::endl;
+    }
+};
+
+template <typename Formatter>
+class DetailedText : public Text<Formatter> {
+public:
+    using Text<Formatter>::Text;
+    void print() const {
+        std::cout << "Detailed format: [" << this->formatter.format() << "]" << std::endl;
     }
 };
 
@@ -27,12 +48,15 @@ int main() {
     PlainText plainFormatter;
     UpperCase upperFormatter;
 
-    Text<PlainText> plaintext;
-    std::cout << "Plain text: ";
-    plainFormatter.print();
+    Text<PlainText> basicPlainText(plainFormatter);
+    basicPlainText.print();
 
-    std::cout << "Upper case text: ";
-    upperFormatter.print();
+    Text<UpperCase> basicUpperText(upperFormatter);
+    basicUpperText.print();
 
-    return 0;
+    DetailedText<PlainText> detailedPlainText(plainFormatter);
+    detailedPlainText.print();
+
+    DetailedText<UpperCase> detailedUpperText(upperFormatter);
+    detailedUpperText.print();
 }
