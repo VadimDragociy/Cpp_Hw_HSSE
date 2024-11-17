@@ -3,7 +3,6 @@
 #include <string>
 #include "Entity.hpp"
 
-using namespace std::literals;
 using namespace Entity_nmspc;
 
 int main() {

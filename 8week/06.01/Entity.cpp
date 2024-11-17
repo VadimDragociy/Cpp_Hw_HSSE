@@ -3,8 +3,6 @@
 #include <string>
 #include "Entity.hpp"
 
-using namespace std::literals;
-
 namespace Entity_nmspc{
 
 Entity::Entity() : m_data_1(s_data_1), m_data_2(0), m_data_3(0) {}
