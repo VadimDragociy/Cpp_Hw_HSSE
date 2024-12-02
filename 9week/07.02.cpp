@@ -3,6 +3,10 @@
 #include <optional>
 #include <string>
 
+double determinant(double this_a, double this_b, double other_a, double other_b) {
+  	return this_a * other_b - this_b * other_a;
+}
+
 // Класс для представления точки
 struct Point {
     double x, y;
@@ -21,9 +25,12 @@ public:
     Line(double a, double b, double c) : a(a), b(b), c(c) {}
 
     bool isIdentical(const Line& other) const {
-        double det = a * other.b - b * other.a;
-        double det1 = c * other.b - b * other.c;
-        double det2 = a * other.c - c * other.a;
+//        double det = a * other.b - b * other.a;
+//        double det1 = c * other.b - b * other.c;
+//        double det2 = a * other.c - c * other.a;
+        double det = determinant(a, b, other.a, other.b);
+        double det1 = determinant(c, b, other.c, other.b);
+        double det2 = determinant(a, c, other.a, other.c);
         return det == 0 && det1 == 0 && det2 == 0;
     }
 
@@ -33,25 +40,31 @@ public:
     }
 };
 
-using IntersectionResult = std::variant<std::monostate, int>;
+using IntersectionResult = std::variant<Line, int, Point>;
 
 IntersectionResult findIntersection(const Line& l1, const Line& l2) {
-    double det = l1.a * l2.b - l1.b * l2.a;
-
+    double det = determinant(l1.a, l1.b, l2.a, l2.b);
     if (det == 0.0) {
         if (l1.isIdentical(l2)) {
-            return std::monostate();
+            return l1;
         } else {
             return 0;
         }
     }
 
-    return 1;
+    double x = (-l1.c * l2.b + l2.c * l1.b) / det;
+    double y = (-l1.a * l2.c + l2.a * l1.c) / det;
+    return Point(x, y);
 }
 
-void answer(IntersectionResult& result) {
-    if (std::holds_alternative<std::monostate>(result)) {
-        std::cout << "infinity" << std::endl;
+void answer(const IntersectionResult& result) {
+    if (std::holds_alternative<Line>(result)) {
+        auto line = std::get<Line>(result);
+        std::cout << "infinity: "<< line.a << "x + "<< line.b << "y + " << line.c << std::endl;
+        return;
+    } else if (std::holds_alternative<Point>(result)) {
+        auto pnt = std::get<Point>(result);
+        std::cout << pnt << std::endl;
         return;
     } else if (std::holds_alternative<int>(result)) {
         auto i = std::get<int>(result);
@@ -62,6 +75,7 @@ void answer(IntersectionResult& result) {
 }
 
 int main() {
+  	try {
     Line l1(1, -1, -1);
     Line l2(2, -2, -2);
     Line l3(0, 1, -2);
@@ -72,5 +86,10 @@ int main() {
 
     auto result2 = findIntersection(l3, l4);
     answer(result2);
+    } catch (const std::invalid_argument& e) {
+      std::cout << e.what() << std::endl;
+    } catch (...) {
+      std::cout << "unknown error" << std::endl;
+    }
 }
 

@@ -3,7 +3,7 @@
 #include <optional>
 
 struct Person{
-    Person() : name(""), age(0), height(0) {}
+    Person() : name(""), age(std::nullopt), height(std::nullopt) {}
     std::string& getName() {
         return name;
     };
@@ -18,6 +18,18 @@ struct Person{
     std::optional<int> age;
     std::optional<int> height;
 
+    friend std::ostream& operator<<(std::ostream& os, const Person& person) {
+        os << person.name << " ";
+        if (person.age.has_value()) {
+            os << person.age.value() << " ";
+        }
+        if (person.height.has_value()) {
+            os << person.height.value() << " ";
+        }
+        return os;
+
+    }
+
 };
 
 struct Builder {
@@ -27,11 +39,11 @@ struct Builder {
         person.name = name;
         return *this;
     }
-    Builder& Height(std::optional<int> height) {
+    Builder& Height(int height) {
         person.height = height;
         return *this;
     }
-    Builder& Age(std::optional<int> age) {
+    Builder& Age(int age) {
         person.age = age;
         return *this;
     }
@@ -47,7 +59,7 @@ int main(){
     Builder builder;
     Builder builder2;
     Person p = builder.Name("Ivan").Age(26).Height(180).get();
-    std::cout << p.getAge() << p.getHeight() << p.getName() << std::endl;
+    std::cout << p << std::endl;
     Person p1 = builder2.Name("unIvan").get();
-    std::cout << p1.getAge() << p1.getHeight() << p1.getName();
+    std::cout << p1;
 }
