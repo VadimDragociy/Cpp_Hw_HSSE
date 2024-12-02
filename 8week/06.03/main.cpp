@@ -1,7 +1,7 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-import Entity1;  // Импорт модуля Entity
+import Entity_module;  // Импорт модуля Entity
 
 int main() {
     Entity entity_1;

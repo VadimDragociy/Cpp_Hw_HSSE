@@ -26,7 +26,7 @@ public:
 template <typename Formatter>
 class Text {
 protected:
-    Formatter formatter;
+    Formatter& formatter;
 public:
     explicit Text(const Formatter& fmt) : formatter(fmt) {}
 
@@ -36,11 +36,11 @@ public:
 };
 
 template <typename Formatter>
-class DetailedText : public Text<Formatter> {
+class DetailedText : protected Text<Formatter> {
 public:
     using Text<Formatter>::Text;
     void print() const {
-        std::cout << "Detailed format: [" << this->formatter.format() << "]" << std::endl;
+        std::cout << "Detailed format: [" << Text<Formatter>::formatter.format() << "]" << std::endl;
     }
 };
 
