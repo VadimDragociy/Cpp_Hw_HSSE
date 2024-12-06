@@ -4,13 +4,13 @@
 
 struct Person{
     Person() : name(""), age(std::nullopt), height(std::nullopt) {}
-    std::string& getName() {
+    const std::string& getName() const {
         return name;
     };
-    int getAge() {
+    const int getAge() const {
         return age.value();
     };
-    int getHeight() {
+    const int getHeight() const {
         return height.value();
     };
 

@@ -22,12 +22,11 @@ class Line {
 public:
     double a, b, c;
 
+    Line() : a(0), b(0), c(0) {}
+
     Line(double a, double b, double c) : a(a), b(b), c(c) {}
 
     bool isIdentical(const Line& other) const {
-//        double det = a * other.b - b * other.a;
-//        double det1 = c * other.b - b * other.c;
-//        double det2 = a * other.c - c * other.a;
         double det = determinant(a, b, other.a, other.b);
         double det1 = determinant(c, b, other.c, other.b);
         double det2 = determinant(a, c, other.a, other.c);
